@@ -1,0 +1,82 @@
+@@include('../partials/header.html')
+<section class="screen">
+    <header class="screen__header">
+        <span class="screen__icon">
+            <i class="fas fa-plus fa-fw"></i>
+        </span>
+        <h1 class="screen__title">Add a Player</h1>
+    </header>
+
+    <form class="screen__form" action="">
+        <fieldset class="screen-form__fieldset">
+            <legend class="screen-form__legend">Personal</legend>
+            <div class="screen-form__group">
+                <input class="screen-form__input" type="text" placeholder="First Name" name="name.first">
+            </div>
+            <div class="screen-form__group">
+                <input class="screen-form__input" type="text" placeholder="Last Name" name="name.last">
+            </div>
+        </fieldset>
+
+        <fieldset class="screen-form__fieldset">
+            <legend class="screen-form__legend">Team</legend>
+            <label class="screen-form__label" for="team.name">Please choose a team</label>
+            <select id="selectTeamList" class="screen-form__dropdown" name="team.name"></select>
+        </fieldset>
+
+        <input class="screen__btn" type="submit" id="submit">
+    </form>
+
+    <div class="recent">
+        <h3 class="recent__title">You have just added:</h3>
+        <ul class="items"></ul>
+    </div>
+
+</section>
+<script>
+    const form = new FormSerializer('[type="text"], select');
+    const submitBtn = document.querySelector('#submit');
+
+    submit.addEventListener('click', e => {
+        e.preventDefault();
+        const data = form.formToJSON();
+
+        fetch('http://localhost:4000/players', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(resp => resp.json())
+            .then(json => {
+                const recent = document.querySelector('.recent');
+                recent.classList.add('show');
+
+                const playersDisplay = document.querySelector('.players')
+                playersDisplay.innerHTML =
+                    `<li id="${json.id}" class="player">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="player__data --name">
+                            <span>${json.name.first}</span>
+                            <span>${json.name.last}</span>
+                        </span>
+                        <span class="player__data --team">${json.team.name}</span>
+                    </li>`
+            })
+            .catch(err => console.log(err));
+
+    });
+
+    function getTeams() {
+        fetch('http://localhost:4000/teams')
+            .then(resp => resp.json())
+            .then(json => {
+                const teamsDisplay = document.querySelector('#selectTeamList')
+                teamsDisplay.innerHTML = json.map(d =>
+                    `<option value="${d.name}">${d.name}</option>`).join('')
+            });
+    };
+    getTeams();
+</script>
+@@include('../partials/utility_nav.html') @@include('../partials/footer.html')

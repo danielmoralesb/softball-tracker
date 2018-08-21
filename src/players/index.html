@@ -1,0 +1,34 @@
+@@include('../partials/header.html')
+<section class="screen --players">
+    <header class="screen__header">
+        <span class="screen__icon">
+            <i class="fas fa-user-circle fa-fw"></i>
+        </span>
+        <h1 class="screen__title">List of Players</h1>
+        <a href="/players/player_input.html" class="screen__btn">
+            <span class="sr-only">Add Player</span>
+            <i class="fas fa-plus"></i>
+        </a>
+    </header>
+    <div class="screen__table">
+        <ul id="players" class="items"></ul>
+    </div>
+</section>
+<script src="/scripts/items.js"></script>
+<script>
+    const data = new Data('.items');
+    data.getData(function (d) {
+        return `<li id="${d.id}" class="item">
+            <i class="fas fa-user-circle"></i>
+            <span class="item__data --name">
+                <span>${d.name.first}</span>
+                <span>${d.name.last}</span>
+            </span>
+            <span class="item__data --team">${d.team.name}</span>
+            <a class="item__delete" role="button">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+        </li>`
+    });
+</script>
+@@include('../partials/utility_nav.html') @@include('../partials/footer.html')

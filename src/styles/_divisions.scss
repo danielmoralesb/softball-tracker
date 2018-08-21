@@ -1,0 +1,40 @@
+.divisions {
+    list-style: none;
+    padding: 0;
+
+    li {
+        align-items: center;
+        border-bottom: 1px solid $brand-primary-alt;
+        display: flex;
+        flex-wrap: wrap;
+        padding: $padding;
+        transition: all 1s ease-in-out;
+
+        &:hover {
+            background: rgba($black, 0.5);
+        }
+
+        .fa-shield-alt {
+            color: $brand-secondary;
+        }
+    }
+}
+
+.division__data {
+    padding: 0 $padding/2;
+
+    &.--name {
+        font-weight: $font-weight-bold;
+        width: 50%;
+    }
+}
+
+.division__delete {
+    margin-left: auto;
+    transition: all .5s ease-in-out;
+
+    &:hover {
+        opacity: 0.5;
+        transform: scale(0.8);
+    }
+}

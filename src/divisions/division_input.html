@@ -1,0 +1,61 @@
+@@include('../partials/header.html')
+<section class="screen">
+    <header class="screen__header">
+        <span class="screen__icon">
+            <i class="fas fa-plus fa-fw"></i>
+        </span>
+        <h1 class="screen__title">Add a Division</h1>
+    </header>
+    <form class="screen__form" action="">
+
+        <fieldset class="screen-form__fieldset">
+            <legend class="screen-form__legend">Name</legend>
+            <div class="screen-form__group">
+                <label class="screen-form__label" for="name">Please add a division name</label>
+                <input class="screen-form__input" type="text" placeholder="Team Name" name="name">
+            </div>
+        </fieldset>
+
+        <input class="screen__btn" type="submit" id="submit">
+    </form>
+
+    <div class="recent">
+        <h3 class="recent__title">You have just added:</h3>
+        <ul class="players"></ul>
+    </div>
+</section>
+
+<script>
+    const form = new FormSerializer('[type="text"]');
+    const submitBtn = document.querySelector('#submit');
+
+    submit.addEventListener('click', e => {
+        e.preventDefault();
+        const data = form.formToJSON();
+        console.log(data);
+        fetch('http://localhost:4000/divisions', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(resp => resp.json())
+            .then(json => {
+                const recent = document.querySelector('.recent');
+                recent.classList.add('show');
+
+                const playersDisplay = document.querySelector('.players')
+                playersDisplay.innerHTML =
+                    `<li id="${json.id}" class="items">
+                        <i class="fas fa-shield-alt"></i>
+                        <span class="item__data --name">
+                            <span>${json.name}</span>
+                        </span>
+                    </li>`
+            })
+            .catch(err => console.log(err));
+    });
+</script>
+@@include('../partials/utility_nav.html')
+@@include('../partials/footer.html')

@@ -1,0 +1,38 @@
+.utility-nav{
+    align-items: center;
+    background: $black;
+    bottom: 0;
+    box-shadow: 0 -1px 5px 0 rgba($black, 0.5);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+}
+
+.utility-nav__item {
+    align-items: center;
+    background: linear-gradient(to bottom, $brand-primary, $black);
+    border: 1px solid $black;
+    color: $text-color-light;
+    display: flex;
+    flex: 1 0 0;
+    flex-direction: column;
+    height: $padding*3;
+    justify-content: center;
+    text-decoration: none;
+
+    &:hover {
+        background: $black;
+    }
+}
+
+.utility-nav__text {
+    color: $text-color-medium;
+    display: block;
+    font-size: $font-size-xs;
+    line-height: $padding/3;
+    margin-top: $padding/3;
+    text-transform: uppercase;
+}

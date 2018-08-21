@@ -1,0 +1,32 @@
+@@include('../partials/header.html')
+<section class="screen --divisions">
+    <header class="screen__header">
+        <span class="screen__icon">
+            <i class="fas fa-shield-alt fa-fw"></i>
+        </span>
+        <h1 class="screen__title">List of Divisions</h1>
+        <a href="/divisions/division_input.html" class="screen__btn">
+            <span class="sr-only">Add a Division</span>
+            <i class="fas fa-plus"></i>
+        </a>
+    </header>
+    <div class="screen__table">
+        <ul id="divisions" class="items"></ul>
+    </div>
+</section>
+<script src="/scripts/items.js"></script>
+<script>
+    const data = new Data('.items');
+    data.getData(function (d) {
+        return `<li id="${d.id}" class="item">
+            <i class="fas fa-shield-alt"></i>
+            <span class="item__data --name">
+                <span>${d.name}</span>
+            </span>
+            <a class="item__delete" role="button">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+        </li>`
+    });
+</script>
+@@include('../partials/utility_nav.html') @@include('../partials/footer.html')

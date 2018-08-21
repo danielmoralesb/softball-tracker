@@ -1,0 +1,96 @@
+@@include('../partials/header.html')
+<section class="game">
+    <!-- game details -->
+    <header class="game__header">
+        <h1 class="game__league">{{ meta.league }}</h1>
+        <p class="game__field">{{ meta.field }}</p>
+        <p class="game__date">{{ meta.gameDate }}</p>
+    </header>
+    <!-- game details -->
+    <div class="score">
+        <div class="score__section">
+
+            <!-- teams -->
+            <div class="score__col">
+                <div class="score__row">
+                    <h2 class="score__heading">Teams</h2>
+                </div>
+                <div class="score__row">
+                    <h3 class="score__team">{{ teams.home.name }}</h3>
+                </div>
+                <div class="score__row">
+                    <h3 class="score__team">{{ teams.away.name }}</h3>
+                </div>
+            </div>
+            <!-- teams -->
+        </div>
+        <div class="score__wrapper">
+            <div class="score__overlay"></div>
+            <div class="score__overlay" style="--direction: left; --left: auto; --right: 0"></div>
+            <div class="score__mask">
+                <!-- innings score -->
+                <div class="score__section score__section--innings">
+                    <div class="score__col" v-for="(inning, index) in innings" :class="{isActive: inning.isActive}" @click='updateInning(index)'>
+                        <div class="score__row">
+                            <h2 class="score__heading">{{ index + 1 }}</h2>
+                        </div>
+                        <div class="score__row" @click="updateScore('home', index)">
+                            <span class="score__num">{{ inning.home }}</span>
+                        </div>
+                        <div class="score__row" @click="updateScore('away', index)">
+                            <span class="score__num">{{ inning.away }}</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- innings score -->
+            </div>
+        </div>
+        <div class="score__section">
+            <!-- runs -->
+            <div class="score__col">
+                <div class="score__row">
+                    <h2 class="score__heading">R</h2>
+                </div>
+                <div class="score__row" @click="decrementRuns('home')">
+                    <span class="score__num">{{ teams.home.runs }}</span>
+                </div>
+                <div class="score__row" @click="decrementRuns('away')">
+                    <span class="score__num">{{ teams.away.runs }}</span>
+                </div>
+            </div>
+            <!-- runs -->
+            <!-- hits -->
+            <div class="score__col">
+                <div class="score__row">
+                    <h2 class="score__heading">H</h2>
+                </div>
+                <div class="score__row" @click="updateHits('home')">
+                    <span class="score__num">{{ teams.home.hits }}</span>
+                </div>
+                <div class="score__row" @click="updateHits('away')">
+                    <span class="score__num">{{ teams.away.hits }}</span>
+                </div>
+            </div>
+            <!-- hits -->
+            <!-- errors -->
+            <div class="score__col">
+                <div class="score__row">
+                    <h2 class="score__heading">E</h2>
+                </div>
+                <div class="score__row" @click="updateErrors('home')">
+                    <span class="score__num">{{ teams.home.errors }}</span>
+                </div>
+                <div class="score__row" @click="updateErrors('away')">
+                    <span class="score__num">{{ teams.away.errors }}</span>
+                </div>
+            </div>
+            <!-- errors -->
+        </div>
+    </div>
+    <div class="actions">
+        <button class="btn" @click="clearScore('home', 'away', 'index')">Clear Score Board</button>
+    </div>
+</section>
+<script src="/scripts/games.js"></script>
+@@include('../partials/utility_nav.html')
+@@include('../partials/footer.html')

@@ -1,0 +1,93 @@
+@@include('../partials/header.html')
+<section class="screen">
+    <header class="screen__header">
+        <span class="screen__icon">
+            <i class="fas fa-baseball-ball fa-fw"></i>
+        </span>
+        <h1 class="screen__title">Create a Game</h1>
+    </header>
+    <form class="screen__form" action="">
+
+        <fieldset class="screen-form__fieldset">
+            <legend class="screen-form__legend">Division</legend>
+            <label class="screen-form__label" for="division-name">Please choose a division</label>
+            <select id="selectDivisionList" class="screen-form__dropdown" name="division-name"></select>
+        </fieldset>
+
+        <fieldset class="screen-form__fieldset">
+            <legend class="screen-form__legend">Visitor Team</legend>
+            <label class="screen-form__label" for="team-name-visitor">Please choose the visitor team</label>
+            <select id="selectTeamList" class="screen-form__dropdown" name="team-name-visitor"></select>
+        </fieldset>
+
+        <input class="screen__btn" type="submit" id="submit">
+    </form>
+
+    <div class="recent">
+        <h3 class="recent__title">You have just added:</h3>
+        <ul class="players"></ul>
+    </div>
+</section>
+
+<script>
+    const divisionList = document.querySelector('#selectDivisionList');
+    const game = {
+        meta: null,
+        home: null,
+        away: null,
+        innings: [],
+        currentInning: 0
+    }
+    function getDivisions() {
+        fetch('http://localhost:4000/divisions')
+        .then(resp => resp.json())
+        .then(json => {
+            const blank = `<option value="">Select One</option>`;
+            const options = json.map(d =>
+            `<option value="${d.id}">${d.name}</option>`).join('');
+            divisionList.innerHTML = blank + options;
+        });
+    };
+    getDivisions();
+
+    // const teamList = document.querySelector('#selectTeamList');
+
+    function displayTeams(divisionID) {
+        console.log(divisionID);
+        const url = `http://localhost:4000/teams?division._id=${divisionID}`
+        fetch(url)
+        .then(resp => resp.json())
+        .then(data => {
+            game.divisionID = divisionID;
+            const blank = `<option value="">Select One</option>`;
+            const options = data.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+            $('#selectTeamList').html(blank + options);
+            $('#selectTeamList').selectric({
+                onChange: function() {
+                    game.away = {
+                        id: $(this).val(),
+                        name: $(this).children(':selected').text()
+                    }
+                    console.log(game)
+                    // updateHomeDisplay();
+                }
+            });
+        });
+    };
+    // displayTeams();
+
+    $(function() {
+        $('#selectDivisionList').selectric({
+            onChange: function() {
+                displayTeams($(this).val());
+            }
+        });
+    });
+
+</script>
+@@include('../partials/utility_nav.html')
+@@include('../partials/footer.html')
+
+
+@@include('../partials/utility_nav.html')
+@@include('../partials/footer.html')
