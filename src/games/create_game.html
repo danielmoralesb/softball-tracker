@@ -11,16 +11,22 @@
         <fieldset class="screen-form__fieldset">
             <legend class="screen-form__legend">Division</legend>
             <label class="screen-form__label" for="division-name">Please choose a division</label>
-            <select id="selectDivisionList" class="screen-form__dropdown" name="division-name"></select>
+            <select id="selectDivision" class="screen-form__dropdown" name="division-name"></select>
         </fieldset>
 
-        <fieldset class="screen-form__fieldset">
+        <fieldset id="visitorTeam" class="screen-form__fieldset --hidden">
             <legend class="screen-form__legend">Visitor Team</legend>
             <label class="screen-form__label" for="team-name-visitor">Please choose the visitor team</label>
-            <select id="selectTeamList" class="screen-form__dropdown" name="team-name-visitor"></select>
+            <select id="selectVisitor" class="screen-form__dropdown" name="team-name-visitor"></select>
         </fieldset>
 
-        <input class="screen__btn" type="submit" id="submit">
+        <fieldset id="homeTeam" class="screen-form__fieldset --hidden">
+            <legend class="screen-form__legend">Home Team</legend>
+            <label class="screen-form__label" for="team-name-home">Please choose the home team</label>
+            <select id="selectHome" class="screen-form__dropdown" name="team-name-home"></select>
+        </fieldset>
+
+        <input class="screen__btn --hidden" type="submit" id="submit">
     </form>
 
     <div class="recent">
@@ -30,64 +36,189 @@
 </section>
 
 <script>
-    const divisionList = document.querySelector('#selectDivisionList');
+    const divisionList = document.querySelector('#selectDivision');
     const game = {
         meta: null,
-        home: null,
-        away: null,
-        innings: [],
-        // currentInning: 0
+        teams: {
+            away: {
+                id: null,
+                name: null
+            },
+            home: {
+                id: null,
+                name: null
+            }
+        },
+        innings: [
+            {
+                away: 0,
+                home: 0
+            },{
+                away: 0,
+                home: 0
+            },{
+                away: 0,
+                home: 0
+            },{
+                away: 0,
+                home: 0
+            },{
+                away: 0,
+                home: 0
+            },{
+                away: 0,
+                home: 0
+            },{
+                away: 0,
+                home: 0
+            }
+        ]
     }
+
     function getDivisions() {
         fetch('http://localhost:4000/divisions')
-        .then(resp => resp.json())
-        .then(json => {
-            const blank = `<option value="">Select One</option>`;
-            const options = json.map(d =>
-            `<option value="${d.id}">${d.name}</option>`).join('');
-            divisionList.innerHTML = blank + options;
-        });
+            .then(resp => resp.json())
+            .then(json => {
+                const blank = `<option value="">Select One</option>`;
+                const options = json.map(d =>
+                    `<option value="${d.id}">${d.name}</option>`).join('');
+                divisionList.innerHTML = blank + options;
+            });
     };
     getDivisions();
 
-    // const teamList = document.querySelector('#selectTeamList');
+    function displayTeams(divisionId, divisionName) {
+        const url = `http://localhost:4000/teams?division._id=${divisionId}`
+        //const divisionName = $(divisionID)
 
-    function displayTeams(divisionID) {
-        console.log(divisionID);
-        const url = `http://localhost:4000/teams?division._id=${divisionID}`
         fetch(url)
-        .then(resp => resp.json())
-        .then(data => {
-            game.divisionID = divisionID;
-            const blank = `<option value="">Select One</option>`;
-            const options = data.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
-            $('#selectTeamList').html(blank + options);
-            $('#selectTeamList').selectric({
-                onChange: function() {
-                    game.away = {
-                        id: $(this).val(),
-                        name: $(this).children(':selected').text()
-                    }
-                    console.log(game)
-                    // updateHomeDisplay();
-                }
-            });
-        });
-    };
-    // displayTeams();
+            .then(resp => resp.json())
+            .then(data => {
 
-    $(function() {
-        $('#selectDivisionList').selectric({
-            onChange: function() {
-                displayTeams($(this).val());
+                const blank = `<option value="">Select One</option>`;
+                const options = data.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+
+                game.division = {
+                    id:  divisionId,
+                    name: divisionName
+                }
+
+                $('#selectVisitor').html(blank + options);
+                $('#selectVisitor').selectric({
+                    onChange: function () {
+                        document.querySelector('#homeTeam').classList.remove('--hidden');
+
+                        game.teams.away = {
+                            id: $(this).val(),
+                            name: $(this).children(':selected').text(),
+                            runs: '0',
+                            hits: '0',
+                            errors: '0'
+                        }
+
+                        const filtered = data.filter(d => {
+                            return d.id != $(this).val();
+                        })
+
+                        displayHome(filtered);
+                    }
+                });
+            });
+    };
+
+    function displayHome(data) {
+        const blank = `<option value="">Select One</option>`;
+        const options = data.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+
+        $('#selectHome').html(blank + options);
+        $('#selectHome').selectric({
+            onChange: function () {
+                const form = new FormSerializer('select');
+                const submit = document.querySelector('#submit');
+                submit.classList.remove('--hidden');
+
+                game.teams.home = {
+                    id: $(this).val(),
+                    name: $(this).children(':selected').text(),
+                    runs: '0',
+                    hits: '0',
+                    errors: '0'
+                }
+            }
+        });
+        submit.addEventListener('click', submitForm);
+    }
+
+    function getDayName() {
+        const date = new Date();
+
+        let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        let dayName = days[date.getDay()];
+
+        return dayName;
+    }
+
+    function getDate() {
+        const date = new Date();
+
+        let months =['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        let monthName = months[date.getMonth()];
+        let days = date.getDate();
+        let years = date.getFullYear();
+
+        const fullDate = `${monthName} ${days}, ${years}`;
+        return fullDate;
+    }
+
+    function getTime() {
+        const now = new Date();
+
+        let hours = now.getHours();
+        let mins = now.getMinutes();
+        let ampm = hours >= 12 ? 'pm' : 'am';
+
+        hours = hours % 12;
+        hours = hours ? hours: 12;
+        mins = mins < 10 ? '0'+mins : mins;
+
+        const fullTime = `${hours}:${mins}${ampm}`;
+        return fullTime;
+    }
+
+    function submitForm(e) {
+        e.preventDefault();
+
+        game.meta = {
+            day: getDayName(),
+            date: getDate(),
+            time: getTime()
+        }
+
+        fetch('http://localhost:4000/games', {
+                method: 'POST',
+                body: JSON.stringify(game),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(resp => resp.json())
+            .then( game =>{
+                window.location.href = `http://localhost:3000/games/new_game.html?id=${game.id}`
+            })
+            .catch(err => console.log(err));
+    }
+
+    $(function () {
+        $('#selectDivision').selectric({
+            onChange: function () {
+                document.querySelector('#visitorTeam').classList.remove('--hidden');
+                let divisionId = $(this).val();
+                let divisionName = $(this).find(':selected').text()
+
+                displayTeams(divisionId, divisionName);
             }
         });
     });
-
 </script>
-@@include('../partials/utility_nav.html')
-@@include('../partials/footer.html')
-
-
-@@include('../partials/utility_nav.html')
+@@include('../partials/utility_nav.html') @@include('../partials/footer.html') @@include('../partials/utility_nav.html')
 @@include('../partials/footer.html')

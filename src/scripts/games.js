@@ -1,105 +1,126 @@
-console.clear();
-
-function formatDate(date) {
-  let ms = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  return `${date.getDate()} of ${ms[date.getMonth()]} ${date.getFullYear()}`;
-};
-
-let currentDate = new Date();
+const urlParams = new URLSearchParams(window.location.search);
+const gameId = urlParams.get('id');
+const game = `http://localhost:4000/games?id=${gameId}`;
 
 new Vue({
   el: '.game',
   data: {
-    meta: {
-      league: 'Wednesday Adult Medium',
-      field: 'Spanish River Field',
-      gameDate: formatDate(currentDate)
-    },
-    teams: {
-      home: {
-        name: 'Yankees',
-        runs: 0,
-        hits: 0,
-        errors: 0
+    game: {
+      'meta': {
+        'day': '',
+        'date': '',
+        'time': ''
       },
-      away: {
-        name: 'Marlins',
-        runs: 0,
-        hits: 0,
-        errors: 0
-      }
+      'innings': [],
+      'division': {
+        'id': '',
+        'name': ''
+      },
+      'teams': {
+        'away': {
+          'id': '',
+          'name': '',
+          'runs': '',
+          'hits': '',
+          'errors': ''
+        },
+        'home': {
+          'id': '',
+          'name': '',
+          'runs': '',
+          'hits': '',
+          'errors': ''
+        }
+      },
+      'id': ''
     },
-    currentInning: 0,
-    innings: []
   },
-  created: function() {
-    for(let i = 0; i < 7; i++){
-      this.innings.push({home: 0, away: 0, isActive: false})
-    }
-    this.updateInning(this.currentInning);
+  created: function () {
+    // for(let i = 0; i < 7; i++){
+    //   this.game.innings.push({home: 0, away: 0, isActive: false})
+    // }
+    // this.updateInning(this.game.currentInning);
+    this.getGame();
   },
   methods: {
-    getDate(datetime) {
-      let date = new Date(datetime).toJSON().slice(0,10).replace(/-/g,'/')
-      return Date
+    getGame: function () {
+      fetch(game)
+        .then(resp => resp.json())
+        .then(json => {
+          this.game = json[0]
+        })
     },
-    updateScore: function(team, index) {
-      this.teams[team].runs++;
-      this.innings[index][team]++;
+    updateScore: function (team, index) {
+      this.game.teams[team].runs++;
+      this.game.innings[index][team]++;
     },
-    updateHits: function(team){
-      this.teams[team].hits++;
+    updateHits: function (team) {
+      this.game.teams[team].hits++;
     },
-    updateErrors: function(team){
-      this.teams[team].errors++;
+    updateErrors: function (team) {
+      this.game.teams[team].errors++;
     },
-    updateInning: function(index){
-      this.currentInning = index;
-      for(let i = 0; i < this.innings.length; i++){
-        this.innings[i].isActive = false;
-        if(index == i) {
-          this.innings[i].isActive = true;
+    updateInning: function (index) {
+      this.game.currentInning = index;
+      for (let i = 0; i < this.game.innings.length; i++) {
+        this.game.innings[i].isActive = false;
+        if (index == i) {
+          this.game.innings[i].isActive = true;
         }
       }
     },
-    decrementRuns: function(team) {
-      if( this.innings[this.currentInning][team] > 0 ){
-        this.teams[team].runs = (this.teams[team].runs - 1 <= 0) ? 0 : this.teams[team].runs - 1 ;
-        this.innings[this.currentInning][team] = this.innings[this.currentInning][team] - 1 < 0 ? 0 : this.innings[this.currentInning][team] - 1;
+    decrementRuns: function (team) {
+      if (this.game.innings[this.game.currentInning][team] > 0) {
+        this.game.teams[team].runs = (this.game.teams[team].runs - 1 <= 0) ? 0 : this.game.teams[team].runs - 1;
+        this.game.innings[this.game.currentInning][team] = this.game.innings[this.game.currentInning][team] - 1 < 0 ? 0 : this.game.innings[this.game.currentInning][team] - 1;
       }
     },
-    clearScore: function(home, away) {
+    clearScore: function (home, away) {
       localStorage.clear();
-      this.teams[home].runs = 0;
-      this.teams[away].runs = 0;
-      this.teams[home].hits = 0;
-      this.teams[away].hits = 0;
-      this.teams[home].errors = 0;
-      this.teams[away].errors = 0;
+      this.game.teams[home].runs = 0;
+      this.game.teams[away].runs = 0;
+      this.game.teams[home].hits = 0;
+      this.game.teams[away].hits = 0;
+      this.game.teams[home].errors = 0;
+      this.game.teams[away].errors = 0;
 
-      for (let i = 0; i < this.innings.length; i++) {
-        this.innings[i][home] = 0;
-        this.innings[i][away] = 0;
+      for (let i = 0; i < this.game.innings.length; i++) {
+        this.game.innings[i][home] = 0;
+        this.game.innings[i][away] = 0;
       }
+    },
+    saveGame: function () {
+      fetch(game, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.game)
+        })
+        .then(resp => resp.json())
+        .then(json => {
+          this.game = json[0];
+          console.log('Game Saved')
+        })
+        .catch(err => console.log(err))
     }
   },
   mounted() {
-    if (localStorage.getItem('this.teams')) this.teams = JSON.parse(localStorage.getItem('this.teams'));
-    if (localStorage.getItem('this.innings')) this.innings = JSON.parse(localStorage.getItem('this.innings'));
+    // if (localStorage.getItem('this.game.teams')) this.game.teams = JSON.parse(localStorage.getItem('this.game.teams'));
+    // if (localStorage.getItem('this.game.innings')) this.game.innings = JSON.parse(localStorage.getItem('this.game.innings'));
   },
   watch: {
     teams: {
       handler() {
-        localStorage.setItem('this.teams', JSON.stringify(this.teams));
+        //localStorage.setItem('this.game.teams', JSON.stringify(this.game.teams));
       },
       deep: true,
     },
     innings: {
       handler() {
-        localStorage.setItem('this.innings', JSON.stringify(this.innings));
+        //localStorage.setItem('this.game.innings', JSON.stringify(this.game.innings));
       },
       deep: true,
     }
   }
 })
-

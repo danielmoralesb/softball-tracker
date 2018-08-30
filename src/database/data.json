@@ -89,35 +89,468 @@
   ],
   "games": [
     {
-      "id": 1,
       "meta": {
-        "divisionID": 1,
-        "date": "2018-08-21"
+        "day": "Thursday",
+        "date": "August 30, 2018",
+        "time": "11:23am"
       },
-      "home": {
-        "id": 2,
-        "name": "BTTW",
-        "runs": 0,
-        "hits": 0,
-        "errors": 0
+      "teams": {
+        "away": {
+          "id": "2",
+          "name": "BTTW",
+          "runs": "",
+          "hits": "",
+          "errors": ""
+        },
+        "home": {
+          "id": "1",
+          "name": "Atlantic Partners",
+          "runs": "",
+          "hits": "",
+          "errors": ""
+        }
       },
-      "away": {
-        "id": 1,
-        "name": "Atlantic Partners",
-        "runs": 0,
-        "hits": 0,
-        "errors": 0
-      },
-      "currentInning": 0,
       "innings": [
-        {"home": 0, "away": 0, "isActive": false},
-        {"home": 0, "away": 0, "isActive": false},
-        {"home": 0, "away": 0, "isActive": false},
-        {"home": 0, "away": 0, "isActive": false},
-        {"home": 0, "away": 0, "isActive": false},
-        {"home": 0, "away": 0, "isActive": false},
-        {"home": 0, "away": 0, "isActive": false}
-      ]
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        }
+      ],
+      "division": {
+        "id": "1",
+        "name": "Monday Recreational 1"
+      },
+      "id": 1
+    },
+    {
+      "meta": {
+        "day": "Thursday",
+        "date": "August 30, 2018",
+        "time": "1:31pm"
+      },
+      "teams": {
+        "away": {
+          "id": "1",
+          "name": "Atlantic Partners",
+          "runs": "",
+          "hits": "",
+          "errors": ""
+        },
+        "home": {
+          "id": "2",
+          "name": "BTTW",
+          "runs": "",
+          "hits": "",
+          "errors": ""
+        }
+      },
+      "innings": [
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        }
+      ],
+      "division": {
+        "id": "1",
+        "name": "Monday Recreational 1"
+      },
+      "id": 2
+    },
+    {
+      "meta": {
+        "day": "Thursday",
+        "date": "August 30, 2018",
+        "time": "1:34pm"
+      },
+      "teams": {
+        "away": {
+          "id": "1",
+          "name": "Atlantic Partners",
+          "runs": "",
+          "hits": "",
+          "errors": ""
+        },
+        "home": {
+          "id": "2",
+          "name": "BTTW",
+          "runs": "",
+          "hits": "",
+          "errors": ""
+        }
+      },
+      "innings": [
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        }
+      ],
+      "division": {
+        "id": "1",
+        "name": "Monday Recreational 1"
+      },
+      "id": 3
+    },
+    {
+      "meta": {
+        "day": "Thursday",
+        "date": "August 30, 2018",
+        "time": "1:42pm"
+      },
+      "teams": {
+        "away": {
+          "id": "1",
+          "name": "Atlantic Partners",
+          "runs": "",
+          "hits": "",
+          "errors": ""
+        },
+        "home": {
+          "id": "2",
+          "name": "BTTW",
+          "runs": "",
+          "hits": "",
+          "errors": ""
+        }
+      },
+      "innings": [
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        }
+      ],
+      "division": {
+        "id": "1",
+        "name": "Monday Recreational 1"
+      },
+      "id": 4
+    },
+    {
+      "meta": {
+        "day": "Thursday",
+        "date": "August 30, 2018",
+        "time": "1:43pm"
+      },
+      "teams": {
+        "away": {
+          "id": "1",
+          "name": "Atlantic Partners",
+          "runs": "",
+          "hits": "",
+          "errors": ""
+        },
+        "home": {
+          "id": "2",
+          "name": "BTTW",
+          "runs": "",
+          "hits": "",
+          "errors": ""
+        }
+      },
+      "innings": [
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        }
+      ],
+      "division": {
+        "id": "1",
+        "name": "Monday Recreational 1"
+      },
+      "id": 5
+    },
+    {
+      "meta": {
+        "day": "Thursday",
+        "date": "August 30, 2018",
+        "time": "1:47pm"
+      },
+      "teams": {
+        "away": {
+          "id": "1",
+          "name": "Atlantic Partners",
+          "runs": "",
+          "hits": "",
+          "errors": ""
+        },
+        "home": {
+          "id": "2",
+          "name": "BTTW",
+          "runs": "",
+          "hits": "",
+          "errors": ""
+        }
+      },
+      "innings": [
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        }
+      ],
+      "division": {
+        "id": "1",
+        "name": "Monday Recreational 1"
+      },
+      "id": 6
+    },
+    {
+      "meta": {
+        "day": "Thursday",
+        "date": "August 30, 2018",
+        "time": "1:49pm"
+      },
+      "teams": {
+        "away": {
+          "id": "1",
+          "name": "Atlantic Partners"
+        },
+        "home": {
+          "id": "2",
+          "name": "BTTW"
+        }
+      },
+      "innings": [
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        }
+      ],
+      "division": {
+        "id": "1",
+        "name": "Monday Recreational 1"
+      },
+      "id": 7
+    },
+    {
+      "meta": {
+        "day": "Thursday",
+        "date": "August 30, 2018",
+        "time": "1:55pm"
+      },
+      "teams": {
+        "away": {
+          "id": "1",
+          "name": "Atlantic Partners",
+          "runs": "0",
+          "hits": "0",
+          "errors": "0"
+        },
+        "home": {
+          "id": "2",
+          "name": "BTTW",
+          "runs": "0",
+          "hits": "0",
+          "errors": "0"
+        }
+      },
+      "innings": [
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        },
+        {
+          "away": 0,
+          "home": 0
+        }
+      ],
+      "division": {
+        "id": "1",
+        "name": "Monday Recreational 1"
+      },
+      "id": 8
+    },
+    {
+      "id": 9
+    },
+    {
+      "id": 10
     }
   ]
 }

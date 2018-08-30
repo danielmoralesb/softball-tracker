@@ -110,7 +110,7 @@ a[role=button] {
 // Figure out a way to turn this into a mixing and
 // loop through all the break points defined in the
 // variables
-.hidden {
+.--hidden {
     display: none !important;
     &--xs {
         @include max-screen('xs') {

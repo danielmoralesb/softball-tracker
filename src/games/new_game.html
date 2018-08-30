@@ -2,35 +2,43 @@
 <section class="game">
     <!-- game details -->
     <header class="game__header">
-        <h1 class="game__league">{{ meta.league }}</h1>
-        <p class="game__field">{{ meta.field }}</p>
-        <p class="game__date">{{ meta.gameDate }}</p>
+        <h1 class="game__league">
+            C.O.B.R.A
+            <small>City of Boca Raton Athletics | Softball</small>
+        </h1>
+        <h2 class="game__division">{{ game.division.name }}</h2>
+        <div class="game__meta">
+            <div class="game-meta__left">
+                <p class="game__day"></p>
+                <p class="game__date">{{ game.meta.date }}</p>
+            </div>
+            <div class="game-meta__right">
+                <p class="game-meta__label">Game Time</p>
+                <p class="game__time">{{ game.meta.time }}</p>
+            </div>
+        </div>
     </header>
-    <!-- game details -->
     <div class="score">
         <div class="score__section">
-
-            <!-- teams -->
             <div class="score__col">
                 <div class="score__row">
                     <h2 class="score__heading">Teams</h2>
                 </div>
                 <div class="score__row">
-                    <h3 class="score__team">{{ teams.home.name }}</h3>
+                    <h3 id="awayTeam" class="score__team">{{ game.teams.home.name }}</h3>
                 </div>
                 <div class="score__row">
-                    <h3 class="score__team">{{ teams.away.name }}</h3>
+                    <h3 id="homeTeam" class="score__team">{{ game.teams.away.name }}</h3>
                 </div>
             </div>
-            <!-- teams -->
         </div>
+        <!-- Teams -->
         <div class="score__wrapper">
             <div class="score__overlay"></div>
             <div class="score__overlay" style="--direction: left; --left: auto; --right: 0"></div>
             <div class="score__mask">
-                <!-- innings score -->
                 <div class="score__section score__section--innings">
-                    <div class="score__col" v-for="(inning, index) in innings" :class="{isActive: inning.isActive}" @click='updateInning(index)'>
+                    <div class="score__col" v-for="(inning, index) in game.innings" :class="{isActive: inning.isActive}" @click='updateInning(index)'>
                         <div class="score__row">
                             <h2 class="score__heading">{{ index + 1 }}</h2>
                         </div>
@@ -42,55 +50,76 @@
                         </div>
                     </div>
                 </div>
-                <!-- innings score -->
             </div>
         </div>
+        <!-- Innings -->
         <div class="score__section">
-            <!-- runs -->
             <div class="score__col">
                 <div class="score__row">
                     <h2 class="score__heading">R</h2>
                 </div>
                 <div class="score__row" @click="decrementRuns('home')">
-                    <span class="score__num">{{ teams.home.runs }}</span>
+                    <span class="score__num">{{ game.teams.home.runs }}</span>
                 </div>
                 <div class="score__row" @click="decrementRuns('away')">
-                    <span class="score__num">{{ teams.away.runs }}</span>
+                    <span class="score__num">{{ game.teams.away.runs }}</span>
                 </div>
             </div>
-            <!-- runs -->
-            <!-- hits -->
             <div class="score__col">
                 <div class="score__row">
                     <h2 class="score__heading">H</h2>
                 </div>
                 <div class="score__row" @click="updateHits('home')">
-                    <span class="score__num">{{ teams.home.hits }}</span>
+                    <span class="score__num">{{ game.teams.home.hits }}</span>
                 </div>
                 <div class="score__row" @click="updateHits('away')">
-                    <span class="score__num">{{ teams.away.hits }}</span>
+                    <span class="score__num">{{ game.teams.away.hits }}</span>
                 </div>
             </div>
-            <!-- hits -->
-            <!-- errors -->
             <div class="score__col">
                 <div class="score__row">
                     <h2 class="score__heading">E</h2>
                 </div>
                 <div class="score__row" @click="updateErrors('home')">
-                    <span class="score__num">{{ teams.home.errors }}</span>
+                    <span class="score__num">{{ game.teams.home.errors }}</span>
                 </div>
                 <div class="score__row" @click="updateErrors('away')">
-                    <span class="score__num">{{ teams.away.errors }}</span>
+                    <span class="score__num">{{ game.teams.away.errors }}</span>
                 </div>
             </div>
-            <!-- errors -->
         </div>
     </div>
+    <!-- game details -->
     <div class="actions">
+        <button class="btn" @click="saveGame">Save Game</button>
         <button class="btn" @click="clearScore('home', 'away', 'index')">Clear Score Board</button>
     </div>
 </section>
+<script>
+    // const urlParams2 = new URLSearchParams(window.location.search);
+    // const id = urlParams2.get('id');
+
+    // function getInfo(gameId) {
+    //     fetch(`http://localhost:4000/games?id=${gameId}`)
+    //     .then(resp => resp.json())
+    //     .then(json => {
+    //         const gameDay = document.querySelector('.game__day');
+    //         const gameDate = document.querySelector('.game__date');
+    //         const gameTime = document.querySelector('.game__time');
+    //         const gameDivision = document.querySelector('.game__division');
+    //         const awayTeam = document.querySelector('#awayTeam');
+    //         const homeTeam = document.querySelector('#homeTeam');
+
+    //         gameDay.innerHTML = json.map(d => d.meta.day).join('');
+    //         gameDate.innerHTML = json.map(d => d.meta.date).join('');
+    //         gameTime.innerHTML = json.map(d => d.meta.time).join('');
+    //         gameDivision.innerHTML = json.map(d => d.division.name).join('');
+    //         awayTeam.innerHTML = json.map(d => d.away.name).join('');
+    //         homeTeam.innerHTML = json.map(d => d.home.name).join('');
+    //     })
+    //     .catch(err => console.log(err))
+    // };
+    // getInfo(id);
+</script>
 <script src="/scripts/games.js"></script>
-@@include('../partials/utility_nav.html')
-@@include('../partials/footer.html')
+@@include('../partials/utility_nav.html') @@include('../partials/footer.html')
